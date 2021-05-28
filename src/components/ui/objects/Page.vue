@@ -27,4 +27,5 @@ export default defineComponent({
   min-height: 100vh
   &__content
     flex: 1 1 auto
+    padding: $spacing-s $spacing-s * 2
 </style>
