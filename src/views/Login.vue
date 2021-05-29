@@ -47,14 +47,26 @@ export default defineComponent({
     const invalidPassword = ref("");
 
     const onSubmit = () => {
-      if (!email.value) invalidEmail.value = "Email is required";
-      else if (!/^(.+)@(.+)/.test(email.value))
-        invalidEmail.value = "Email is invalid";
-      else invalidEmail.value = "";
+      validateEmail();
+      validatePassword();
+    };
 
-      if (password.value.length < 6)
+    const validateEmail = () => {
+      if (!email.value) {
+        invalidEmail.value = "Email is required";
+      } else if (!/^(.+)@(.+)/.test(email.value)) {
+        invalidEmail.value = "Email is invalid";
+      } else {
+        invalidEmail.value = "";
+      }
+    };
+
+    const validatePassword = () => {
+      if (password.value.length < 6) {
         invalidPassword.value = "The password must be at least 6 characters";
-      else invalidPassword.value = "";
+      } else {
+        invalidPassword.value = "";
+      }
     };
 
     return { email, password, invalidEmail, invalidPassword, onSubmit };
