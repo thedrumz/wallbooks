@@ -30,12 +30,23 @@ describe("Login component", () => {
 
   it("Should provide an error message on submit with invalid email", async () => {
     const { getByText, getByTestId, getByLabelText } = render(Login);
-
     const emailInput = getByLabelText(/email/i);
-    userEvent.type(emailInput, "invalid.email@");
 
+    userEvent.type(emailInput, "invalid.email@");
     await fireEvent.submit(getByTestId("form"));
 
     expect(getByText("Email is invalid")).toBeInTheDocument();
+  });
+
+  it("Should provide an error message on submit if password has less than 6 characters", async () => {
+    const { getByText, getByTestId, getByLabelText } = render(Login);
+    const passwordInput = getByLabelText(/password/i);
+
+    userEvent.type(passwordInput, "12345");
+    await fireEvent.submit(getByTestId("form"));
+
+    expect(
+      getByText("The password must be at least 6 characters")
+    ).toBeInTheDocument();
   });
 });

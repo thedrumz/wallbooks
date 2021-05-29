@@ -25,6 +25,7 @@
               v-model="password"
             />
           </label>
+          <span v-if="invalidPassword">{{ invalidPassword }}</span>
           <button type="submit">Sign in</button>
         </form>
       </section>
@@ -43,15 +44,20 @@ export default defineComponent({
     const email = ref("");
     const password = ref("");
     const invalidEmail = ref("");
+    const invalidPassword = ref("");
 
     const onSubmit = () => {
       if (!email.value) invalidEmail.value = "Email is required";
       else if (!/^(.+)@(.+)/.test(email.value))
         invalidEmail.value = "Email is invalid";
       else invalidEmail.value = "";
+
+      if (password.value.length < 6)
+        invalidPassword.value = "The password must be at least 6 characters";
+      else invalidPassword.value = "";
     };
 
-    return { email, password, invalidEmail, onSubmit };
+    return { email, password, invalidEmail, invalidPassword, onSubmit };
   },
 });
 </script>
