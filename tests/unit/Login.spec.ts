@@ -2,6 +2,7 @@ import "@testing-library/jest-dom";
 import { fireEvent, render } from "@testing-library/vue";
 import userEvent from "@testing-library/user-event";
 import Login from "@/views/Login.vue";
+import { generateLogin } from "../factories/login";
 
 describe("Login component", () => {
   it("should render Login page", () => {
@@ -38,15 +39,16 @@ describe("Login component", () => {
     expect(getByText("Email is invalid")).toBeInTheDocument();
   });
 
-  it("Should provide an error message on submit if password has less than 6 characters", async () => {
+  it("Should provide success message on submit with valid credentials", async () => {
     const { getByText, getByTestId, getByLabelText } = render(Login);
+    const emailInput = getByLabelText(/email/i);
     const passwordInput = getByLabelText(/password/i);
+    const loginData = generateLogin();
 
-    userEvent.type(passwordInput, "12345");
+    userEvent.type(emailInput, loginData.email);
+    userEvent.type(passwordInput, loginData.password);
     await fireEvent.submit(getByTestId("form"));
 
-    expect(
-      getByText("The password must be at least 6 characters")
-    ).toBeInTheDocument();
+    expect(getByText("Login success !!")).toBeInTheDocument();
   });
 });

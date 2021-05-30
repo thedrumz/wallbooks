@@ -2,6 +2,7 @@
   <div class="home">
     <Page position="center">
       <section class="login">
+        <span class="login-success" v-if="isValidForm">Login success !!</span>
         <h1 class="login__title">Login</h1>
         <form
           class="login__form"
@@ -49,6 +50,7 @@ export default defineComponent({
     const email = ref("");
     const password = ref("");
     const triggerValidation = ref(false);
+    const isValidForm = ref(false);
 
     const emailValidator = (): string => {
       if (!email.value) {
@@ -69,6 +71,7 @@ export default defineComponent({
     };
 
     const onSubmit = () => {
+      isValidForm.value = !emailValidator() && !passwordValidator();
       triggerValidation.value = true;
     };
 
@@ -79,6 +82,7 @@ export default defineComponent({
       triggerValidation,
       emailValidator,
       passwordValidator,
+      isValidForm,
     };
   },
 });
@@ -88,6 +92,7 @@ export default defineComponent({
 @import "@/assets/styles/tools/_mixins.sass";
 @import "@/assets/styles/settings/_variables.sass";
 .login
+  position: relative
   width: 30rem
   @include center()
   margin: 0 auto
@@ -102,4 +107,14 @@ export default defineComponent({
     flex-direction: column
   .login-btn
     margin-top: 2rem
+  .login-success
+    position: absolute
+    top: -26px
+    background-color: white
+    border: 1px solid $primary-color
+    padding: 8px 25px
+    text-transform: uppercase
+    border-radius: 4px
+    font-weight: 700
+    color: $primary-color
 </style>
