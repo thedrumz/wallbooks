@@ -1,12 +1,12 @@
 import { Factory } from "fishery";
 import { internet } from "faker";
-import { ILogin } from "@/types/Login";
+import { User } from "@/types/User";
 
 const factory = Factory.define(() => ({
   email: internet.email(),
   password: internet.password(),
 }));
 
-export const generateLogin = (): ILogin => {
-  return <ILogin>factory.build();
+export const generateLogin = (): User => {
+  return <User>factory.build();
 };

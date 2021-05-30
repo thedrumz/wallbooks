@@ -1,11 +1,11 @@
 <template>
   <Page position="center">
     <UserForm
-      class="login"
-      title="Login"
-      buttonText="Sign in"
-      :formValidMessage="loginSuccess"
-      :formErrorMessage="loginError"
+      class="signup"
+      title="Create account"
+      buttonText="Sign up"
+      :formValidMessage="signupSuccess"
+      :formErrorMessage="signupError"
       :onSubmit="onSubmit"
     >
       <template v-slot:content>
@@ -25,19 +25,28 @@
           placeholder="Password"
           v-model:value="password"
           :triggerValidation="triggerValidation"
-          :validator="passwordValidator"
+          :validator="passwordValidator(password)"
+        />
+        <CustomInput
+          label="Repeat password"
+          type="password"
+          name="re-password"
+          placeholder="Password"
+          v-model:value="rePassword"
+          :triggerValidation="triggerValidation"
+          :validator="passwordValidator(rePassword)"
         />
       </template>
       <template v-slot:footer>
-        <div class="signup">
-          <p class="signup__copy">Don't have an account ?</p>
+        <div class="login">
+          <p class="login__copy">Already have an account ?</p>
           <Button
-            class="signup__btn"
+            class="login__btn"
             tag="router-link"
             theme="secondary"
-            to="/sign-up"
+            to="/login"
           >
-            Sign up
+            Login
           </Button>
         </div>
       </template>
@@ -51,7 +60,7 @@ import Page from "@/components/ui/objects/Page.vue";
 import UserForm from "@/components/ui/objects/UserForm.vue";
 import CustomInput from "@/components/ui/atoms/CustomInput.vue";
 import Button from "@/components/ui/atoms/Button.vue";
-import { loginUser } from "@/services/userRepository";
+import { createUser } from "@/services/userRepository";
 
 export default defineComponent({
   name: "Login",
@@ -59,9 +68,10 @@ export default defineComponent({
   setup() {
     const email = ref("");
     const password = ref("");
+    const rePassword = ref("");
     const triggerValidation = ref(false);
-    const loginSuccess = ref("");
-    const loginError = ref("");
+    const signupSuccess = ref("");
+    const signupError = ref("");
 
     const emailValidator = (): string => {
       if (!email.value) {
@@ -73,25 +83,30 @@ export default defineComponent({
       }
     };
 
-    const passwordValidator = (): string => {
-      if (password.value.length < 6) {
+    const passwordValidator = (field: string) => (): string => {
+      if (field.length < 6) {
         return "The password must be at least 6 characters";
+      } else if (password.value !== rePassword.value) {
+        return "Passwords doesn't match";
       } else {
         return "";
       }
     };
 
     const onSubmit = async () => {
-      const isValidForm = !emailValidator() && !passwordValidator();
+      const isValidForm =
+        !emailValidator() &&
+        !passwordValidator(password.value)() &&
+        !passwordValidator(rePassword.value)();
       triggerValidation.value = true;
 
       if (isValidForm) {
         try {
-          await loginUser({ email: email.value, password: password.value });
-          loginSuccess.value = "Login success !!";
-          loginError.value = "";
+          await createUser({ email: email.value, password: password.value });
+          signupSuccess.value = "Welcome to WallBooks !!";
+          signupError.value = "";
         } catch (error) {
-          loginError.value = error.message;
+          signupError.value = error.message;
         }
       }
     };
@@ -99,12 +114,13 @@ export default defineComponent({
     return {
       email,
       password,
+      rePassword,
       onSubmit,
       triggerValidation,
       emailValidator,
       passwordValidator,
-      loginSuccess,
-      loginError,
+      signupSuccess,
+      signupError,
     };
   },
 });
@@ -113,10 +129,11 @@ export default defineComponent({
 <style lang="sass" scoped>
 @import "@/assets/styles/tools/_mixins.sass";
 @import "@/assets/styles/settings/_variables.sass";
-.login
+.signup
+  background: linear-gradient(45deg,#398bbc,#43cfa8)
   &__btn
     margin-top: 2rem
-  .signup
+  .login
     width: 60%
     display: flex
     justify-content: space-between
