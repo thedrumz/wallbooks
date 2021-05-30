@@ -11,12 +11,14 @@
         @input="$emit('update:value', $event.target.value)"
       />
     </label>
-    <span class="custom-input__error" v-if="triggerValidation">{{
-      validator()
-    }}</span>
+    <ValidationError class="custom-input__error" v-if="triggerValidation">
+      {{ validator() }}
+    </ValidationError>
   </div>
 </template>
 <script lang="ts">
+import ValidationError from "@/components/ui/atoms/ValidationError.vue";
+
 export default {
   name: "InputEmail",
   props: {
@@ -48,6 +50,7 @@ export default {
       type: Function,
     },
   },
+  components: { ValidationError },
 };
 </script>
 
@@ -82,8 +85,4 @@ export default {
   &__error
     position: absolute
     bottom: 10px
-    font-size: $fs-input-error
-    font-weight: 500
-    color: $error-color
-    letter-spacing: 1px
 </style>

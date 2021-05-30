@@ -2,7 +2,7 @@
   <div class="home">
     <Page position="center">
       <section class="login">
-        <span class="login-success" v-if="isValidForm">Login success !!</span>
+        <span class="login-success" v-if="loginSuccess">Login success !!</span>
         <h1 class="login__title">Login</h1>
         <form
           class="login__form"
@@ -28,6 +28,9 @@
             :triggerValidation="triggerValidation"
             :validator="passwordValidator"
           />
+          <ValidationError class="login-error" v-if="loginError">{{
+            loginError
+          }}</ValidationError>
           <Button class="login-btn" tag="button" theme="primary"
             >Sign in</Button
           >
@@ -42,15 +45,18 @@ import { defineComponent, ref } from "vue";
 import Page from "@/components/ui/objects/Page.vue";
 import CustomInput from "@/components/ui/atoms/CustomInput.vue";
 import Button from "@/components/ui/atoms/Button.vue";
+import ValidationError from "@/components/ui/atoms/ValidationError.vue";
+import { loginUser } from "@/services/userRepository";
 
 export default defineComponent({
   name: "Login",
-  components: { Page, CustomInput, Button },
+  components: { Page, CustomInput, Button, ValidationError },
   setup() {
     const email = ref("");
     const password = ref("");
     const triggerValidation = ref(false);
-    const isValidForm = ref(false);
+    const loginSuccess = ref(false);
+    const loginError = ref("");
 
     const emailValidator = (): string => {
       if (!email.value) {
@@ -70,9 +76,20 @@ export default defineComponent({
       }
     };
 
-    const onSubmit = () => {
-      isValidForm.value = !emailValidator() && !passwordValidator();
+    const onSubmit = async () => {
+      const isValidForm = !emailValidator() && !passwordValidator();
       triggerValidation.value = true;
+
+      if (isValidForm) {
+        try {
+          await loginUser({ email: email.value, password: password.value });
+          loginSuccess.value = true;
+          loginError.value = "";
+          console.log("pasa");
+        } catch (error) {
+          loginError.value = error.message;
+        }
+      }
     };
 
     return {
@@ -82,7 +99,8 @@ export default defineComponent({
       triggerValidation,
       emailValidator,
       passwordValidator,
-      isValidForm,
+      loginSuccess,
+      loginError,
     };
   },
 });
