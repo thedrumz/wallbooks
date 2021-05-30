@@ -1,52 +1,48 @@
 <template>
-  <div class="home">
-    <Page position="center">
-      <section class="login">
-        <span class="login-success" v-if="loginSuccess">Login success !!</span>
-        <h1 class="login__title">Login</h1>
-        <form
-          class="login__form"
-          novalidate
-          @submit.prevent="onSubmit"
-          data-testid="form"
+  <Page position="center">
+    <section class="login">
+      <span class="login-success" v-if="loginSuccess">Login success !!</span>
+      <h1 class="login__title">Login</h1>
+      <form
+        class="login__form"
+        novalidate
+        @submit.prevent="onSubmit"
+        data-testid="form"
+      >
+        <CustomInput
+          label="Email"
+          type="text"
+          name="email"
+          placeholder="Enter your email"
+          v-model:value="email"
+          :triggerValidation="triggerValidation"
+          :validator="emailValidator"
+        />
+        <CustomInput
+          label="Password"
+          type="password"
+          name="password"
+          placeholder="Password"
+          v-model:value="password"
+          :triggerValidation="triggerValidation"
+          :validator="passwordValidator"
+        />
+        <ValidationError v-if="loginError">{{ loginError }}</ValidationError>
+        <Button class="login__btn" tag="button" theme="primary">Sign in</Button>
+      </form>
+      <div class="signup">
+        <p class="signup__copy">Don't have an account ?</p>
+        <Button
+          class="signup__btn"
+          tag="router-link"
+          theme="secondary"
+          to="/sign-up"
         >
-          <CustomInput
-            label="Email"
-            type="text"
-            name="email"
-            placeholder="Enter your email"
-            v-model:value="email"
-            :triggerValidation="triggerValidation"
-            :validator="emailValidator"
-          />
-          <CustomInput
-            label="Password"
-            type="password"
-            name="password"
-            placeholder="Password"
-            v-model:value="password"
-            :triggerValidation="triggerValidation"
-            :validator="passwordValidator"
-          />
-          <ValidationError v-if="loginError">{{ loginError }}</ValidationError>
-          <Button class="login__btn" tag="button" theme="primary"
-            >Sign in</Button
-          >
-        </form>
-        <div class="signup">
-          <p class="signup__copy">Don't have an account ?</p>
-          <Button
-            class="signup__btn"
-            tag="router-link"
-            theme="secondary"
-            to="/sign-up"
-          >
-            Sign up
-          </Button>
-        </div>
-      </section>
-    </Page>
-  </div>
+          Sign up
+        </Button>
+      </div>
+    </section>
+  </Page>
 </template>
 
 <script lang="ts">
@@ -94,7 +90,6 @@ export default defineComponent({
           await loginUser({ email: email.value, password: password.value });
           loginSuccess.value = true;
           loginError.value = "";
-          console.log("pasa");
         } catch (error) {
           loginError.value = error.message;
         }
