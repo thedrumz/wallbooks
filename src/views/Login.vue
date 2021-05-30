@@ -28,13 +28,22 @@
             :triggerValidation="triggerValidation"
             :validator="passwordValidator"
           />
-          <ValidationError class="login-error" v-if="loginError">{{
-            loginError
-          }}</ValidationError>
-          <Button class="login-btn" tag="button" theme="primary"
+          <ValidationError v-if="loginError">{{ loginError }}</ValidationError>
+          <Button class="login__btn" tag="button" theme="primary"
             >Sign in</Button
           >
         </form>
+        <div class="signup">
+          <p class="signup__copy">Don't have an account ?</p>
+          <Button
+            class="signup__btn"
+            tag="router-link"
+            theme="secondary"
+            to="/sign-up"
+          >
+            Sign up
+          </Button>
+        </div>
       </section>
     </Page>
   </div>
@@ -111,7 +120,7 @@ export default defineComponent({
 @import "@/assets/styles/settings/_variables.sass";
 .login
   position: relative
-  width: 30rem
+  width: 32rem
   @include center()
   margin: 0 auto
   padding-bottom: 2.5rem
@@ -120,10 +129,10 @@ export default defineComponent({
   &__title
     color: $text-inverted-color
   &__form
-    width: 50%
+    width: 60%
     display: flex
     flex-direction: column
-  .login-btn
+  &__btn
     margin-top: 2rem
   .login-success
     position: absolute
@@ -135,4 +144,12 @@ export default defineComponent({
     border-radius: 4px
     font-weight: 700
     color: $primary-color
+  .signup
+    width: 60%
+    display: flex
+    justify-content: space-between
+    align-items: center
+    margin-top: .5rem
+    &__copy
+      color: $text-inverted-color
 </style>

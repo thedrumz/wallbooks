@@ -74,4 +74,9 @@ describe("Login component", () => {
 
     expect(getByText(/error on login/i)).toBeInTheDocument();
   });
+
+  it("Should renders a Sign up button", () => {
+    const { getByText } = render(Login);
+    expect(getByText("Sign up")).toBeInTheDocument();
+  });
 });
