@@ -32,14 +32,16 @@ export default {
   display: flex
   flex-direction: column
   min-height: 100vh
+  background-color: $background-extra-light-color
   &__content
     flex: 1 1 auto
-    padding: $spacing-s $spacing-s * 2
     display: flex
+    flex-direction: column
+    padding: $spacing-s $spacing-s * 2
     &--top
-      align-items: flex-start
+      justify-content: flex-start
     &--center
-      align-items: center
+      justify-content: center
     &--bottom
-      align-items: flex-end
+      justify-content: flex-end
 </style>

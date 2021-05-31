@@ -1,27 +1,22 @@
 <template>
   <article class="book">
     <header class="book__header">
-      <img :src="imageUrl" alt="book image" />
+      <img class="book__image" :src="imageUrl" alt="book image" />
     </header>
-    <main>
+    <main class="book__content">
       <h2 class="book__title">{{ title }}</h2>
       <h3 class="book__author">{{ author }}</h3>
-      <p class="book__description">{{ description }}</p>
+      <p class="book__description">{{ truncatedText }}</p>
       <span class="publish__publish-date">{{ formattedDate }}</span>
     </main>
-    <footer>
-      <Button
-        class="signup__btn"
-        tag="router-link"
-        theme="primary"
-        :to="`/books/edit/${id}`"
-      >
+    <footer class="book__footer">
+      <Button class="signup__btn" tag="router-link" :to="`/books/edit/${id}`">
         Edit book
       </Button>
       <Button
         class="signup__btn"
         tag="router-link"
-        theme="secondary"
+        theme="danger"
         :to="`/books/delete/${id}`"
       >
         Delete
@@ -33,6 +28,8 @@
 <script lang="ts">
 import Button from "@/components/ui/atoms/Button.vue";
 import { dateToString } from "@/utils/dates";
+import { truncate } from "@/utils/text";
+import { Book } from "@/types/Book";
 
 export default {
   props: {
@@ -62,12 +59,43 @@ export default {
     },
   },
   components: { Button },
-  setup(props) {
+  setup(props: Book) {
     const formattedDate = dateToString(props.publishDate);
+    const truncatedText = truncate(props.description, 200, "...");
 
-    return { formattedDate };
+    return { formattedDate, truncatedText };
   },
 };
 </script>
 
-<style lang="sass"></style>
+<style lang="sass">
+@import "@/assets/styles/settings/_variables.sass";
+.book
+  height: 100%
+  display: flex
+  flex-direction: column
+  background-color: $background-white
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1)
+  &:hover
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)
+  &__image
+    width: 100%
+    height: 300px
+    object-fit: cover
+  &__content
+    flex: 1 1 auto
+    padding: $spacing-m $spacing-m 0
+  &__title
+    margin: 0
+  &__author
+    margin: 0
+    color: $text-primary-color
+    font-size: $fs-text-m
+    font-weight: 500
+  &__footer
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding: $spacing-m
+</style>

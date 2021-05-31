@@ -18,7 +18,7 @@ export default {
       type: String,
       default: "default",
       validator(value: string) {
-        const themes = ["secondary", "primary", "default"];
+        const themes = ["secondary", "primary", "default", "danger"];
         return themes.includes(value);
       },
     },
@@ -58,14 +58,23 @@ export default {
   &--primary
     color: $primary-color
     background: $btn-primary-color
+    border: 1px solid
     &:hover,
     &:focus
       background: mix($btn-primary-color, $primary-color, 80%)
+      border: 1px solid mix($btn-primary-color, $primary-color, 80%)
   &--secondary
     color: $text-inverted-color
-    background: $btn-secondary-color
+    background: transparent
     border: 1px solid $border-color-inverted
     &:hover,
     &:focus
       border: 1px solid mix($btn-primary-color, $primary-color, 60%)
+  &--danger
+    color: $btn-danger-color
+    background: transparent
+    border: 1px solid transparent
+    &:hover,
+    &:focus
+      border: 1px solid $btn-danger-color
 </style>
