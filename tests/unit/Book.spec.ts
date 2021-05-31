@@ -3,6 +3,10 @@ import { render } from "@testing-library/vue";
 import Book from "@/components/ui/molecules/Book.vue";
 import { generateBook } from "../factories/books";
 import { dateToString } from "@/utils/dates";
+import { truncate } from "@/utils/text";
+
+jest.mock("@/utils/text");
+const mockedTruncate = truncate as jest.Mock;
 
 describe("Book component", () => {
   it("should render an image", () => {
@@ -42,6 +46,7 @@ describe("Book component", () => {
 
   it("should render a description", () => {
     const book = generateBook();
+    mockedTruncate.mockReturnValue(book.description);
 
     const { getByText } = render(Book, {
       props: book,

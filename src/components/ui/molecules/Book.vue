@@ -31,6 +31,9 @@ import { dateToString } from "@/utils/dates";
 import { truncate } from "@/utils/text";
 import { Book } from "@/types/Book";
 
+const DESCRIPTION_MAX_LENGTH = 200;
+const DESCRIPTION_ELLIPSIS = "...";
+
 export default {
   props: {
     id: {
@@ -61,7 +64,11 @@ export default {
   components: { Button },
   setup(props: Book) {
     const formattedDate = dateToString(props.publishDate);
-    const truncatedText = truncate(props.description, 200, "...");
+    const truncatedText = truncate(
+      props.description,
+      DESCRIPTION_MAX_LENGTH,
+      DESCRIPTION_ELLIPSIS
+    );
 
     return { formattedDate, truncatedText };
   },
