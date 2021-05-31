@@ -35,11 +35,26 @@ export const createUser = async (loginData: Auth): Promise<void> => {
 export const getLoggedUser = async (): Promise<User | null> => {
   return new Promise((resolve, reject) => {
     firebase.auth().onAuthStateChanged((firebaseUser) => {
+      if (!firebaseUser) resolve(null);
       const user = {
         id: firebaseUser?.uid,
         email: firebaseUser?.email,
+        token: firebaseUser?.getIdToken(),
       } as User;
       resolve(user);
     }, reject);
   });
+};
+
+export const logout = async (): Promise<void> => {
+  await firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      console.log("Logged out!");
+    })
+    .catch((error) => {
+      console.log(error.message);
+      throw new Error(error.message);
+    });
 };

@@ -1,9 +1,17 @@
 <template>
-  <h1>Home</h1>
+  <Page>
+    <h1>Home</h1>
+  </Page>
 </template>
 
 <script>
-export default {};
+import { defineComponent } from "vue";
+import Page from "@/components/ui/objects/Page.vue";
+
+export default defineComponent({
+  name: "Home",
+  components: { Page },
+});
 </script>
 
 <style></style>

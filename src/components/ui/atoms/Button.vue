@@ -49,6 +49,12 @@ export default {
   &--block
     display: block
     width: 100%
+  &--default
+    color: $btn-default-color
+    background-color: $btn-default-bg-color
+    &:hover,
+    &:focus
+      background: mix($btn-default-bg-color, $btn-default-color, 80%)
   &--primary
     color: $primary-color
     background: $btn-primary-color
