@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { fireEvent, render } from "@testing-library/vue";
 import userEvent from "@testing-library/user-event";
-import Signup from "@/views/Signup.vue";
+import SignupForm from "@/components/ui/molecules/SignupForm.vue";
 import { generateLogin } from "../factories/login";
 import { createUser } from "@/services/userRepository";
 
@@ -10,29 +10,29 @@ const mockedLoginUser = createUser as jest.Mock<Promise<void>>;
 
 describe("Signup component", () => {
   it("should render Signup page", () => {
-    const { getByText } = render(Signup);
+    const { getByText } = render(SignupForm);
     expect(getByText(/create account/i)).toBeInTheDocument();
   });
 
   it("Shound render email, password and repeat password inputs", () => {
-    const { getByLabelText } = render(Signup);
+    const { getByLabelText } = render(SignupForm);
     expect(getByLabelText(/email/i)).toBeInTheDocument();
     expect(getByLabelText(/^password/i)).toBeInTheDocument();
     expect(getByLabelText(/repeat password/i)).toBeInTheDocument();
   });
 
   it("Should renders a Sign up button", () => {
-    const { getByText } = render(Signup);
+    const { getByText } = render(SignupForm);
     expect(getByText(/sign up/i)).toBeInTheDocument();
   });
 
   it("Should renders a Login button", () => {
-    const { getByText } = render(Signup);
+    const { getByText } = render(SignupForm);
     expect(getByText(/login/i)).toBeInTheDocument();
   });
 
   it("Should provide an error message when passwords doesn't match", async () => {
-    const { getAllByText, getByTestId, getByLabelText } = render(Signup);
+    const { getAllByText, getByTestId, getByLabelText } = render(SignupForm);
     const passwordInput = getByLabelText(/^password/i);
     const rePasswordInput = getByLabelText(/repeat password/i);
     const { password } = generateLogin();
@@ -46,7 +46,7 @@ describe("Signup component", () => {
   });
 
   it("Should provide a success message on signup", async () => {
-    const { getByText, getByTestId, getByLabelText } = render(Signup);
+    const { getByText, getByTestId, getByLabelText } = render(SignupForm);
     const emailInput = getByLabelText(/email/i);
     const passwordInput = getByLabelText(/^password/i);
     const rePasswordInput = getByLabelText(/repeat password/i);
@@ -64,7 +64,7 @@ describe("Signup component", () => {
   });
 
   it("Should provide a success message on signup", async () => {
-    const { getByText, getByTestId, getByLabelText } = render(Signup);
+    const { getByText, getByTestId, getByLabelText } = render(SignupForm);
     const emailInput = getByLabelText(/email/i);
     const passwordInput = getByLabelText(/^password/i);
     const rePasswordInput = getByLabelText(/repeat password/i);
