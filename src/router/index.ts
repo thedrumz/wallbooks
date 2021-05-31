@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { User } from "@/types/User";
 import { getLoggedUser } from "@/services/userRepository";
 import Login from "../views/Login.vue";
 import Home from "../views/Home.vue";
@@ -31,9 +32,9 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const logedUser = await getLoggedUser();
+  const user: User | null = await getLoggedUser();
   if (to.matched.some((record) => record.meta.authRequired)) {
-    if (logedUser) {
+    if (user) {
       next();
     } else {
       next({ path: "/login" });
