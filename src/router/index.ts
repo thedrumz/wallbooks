@@ -24,6 +24,22 @@ const routes: Array<RouteRecordRaw> = [
       authRequired: true,
     },
   },
+  {
+    path: "/books/edit/:id",
+    name: "EditBook",
+    component: Home,
+    meta: {
+      authRequired: true,
+    },
+  },
+  {
+    path: "/books/delete/:id",
+    name: "DeleteBook",
+    component: Home,
+    meta: {
+      authRequired: true,
+    },
+  },
 ];
 
 const router = createRouter({
