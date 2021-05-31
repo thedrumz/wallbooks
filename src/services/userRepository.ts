@@ -20,7 +20,7 @@ export const loginUser = async (loginData: User): Promise<void> => {
 };
 
 export const createUser = async (loginData: User): Promise<void> => {
-  await firebase
+  firebase
     .auth()
     .createUserWithEmailAndPassword(loginData.email, loginData.password)
     .then((e) => {
@@ -32,7 +32,7 @@ export const createUser = async (loginData: User): Promise<void> => {
     });
 };
 
-export const getLogedUser = async (): Promise<firebase.User | null> => {
+export const getLoggedUser = async (): Promise<firebase.User | null> => {
   return new Promise((resolve, reject) => {
     firebase.auth().onAuthStateChanged((user) => {
       resolve(user);
