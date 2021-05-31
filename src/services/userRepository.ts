@@ -2,7 +2,7 @@ import { User } from "@/types/User";
 import firebase from "firebase";
 
 export const loginUser = async (loginData: User): Promise<void> => {
-  firebase
+  await firebase
     .auth()
     .setPersistence(firebase.auth.Auth.Persistence.SESSION)
     .then(() => {
@@ -20,7 +20,7 @@ export const loginUser = async (loginData: User): Promise<void> => {
 };
 
 export const createUser = async (loginData: User): Promise<void> => {
-  firebase
+  await firebase
     .auth()
     .createUserWithEmailAndPassword(loginData.email, loginData.password)
     .then((e) => {
