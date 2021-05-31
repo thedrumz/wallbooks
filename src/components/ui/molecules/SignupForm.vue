@@ -1,10 +1,10 @@
 <template>
+  <Notification v-if="signupSuccess" message="Welcome to WallBooks !!" />
+  <Notification v-if="signupError" :message="signupError" type="error" />
   <UserForm
     class="signup"
     title="Create account"
     buttonText="Sign up"
-    :formValidMessage="signupSuccess"
-    :formErrorMessage="signupError"
     :onSubmit="onSubmit"
   >
     <template v-slot:content>
@@ -54,21 +54,22 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import { createUser } from "@/services/userRepository";
 import UserForm from "@/components/ui/objects/UserForm.vue";
 import CustomInput from "@/components/ui/atoms/CustomInput.vue";
 import Button from "@/components/ui/atoms/Button.vue";
-import { createUser } from "@/services/userRepository";
+import Notification from "@/components/ui/atoms/Notification.vue";
 
 export default defineComponent({
   name: "Login",
-  components: { UserForm, CustomInput, Button },
+  components: { UserForm, CustomInput, Button, Notification },
   emits: ["onSignup"],
   setup(props, { emit }) {
     const email = ref("");
     const password = ref("");
     const rePassword = ref("");
     const triggerValidation = ref(false);
-    const signupSuccess = ref("");
+    const signupSuccess = ref(false);
     const signupError = ref("");
 
     const emailValidator = (): string => {
@@ -101,7 +102,7 @@ export default defineComponent({
       if (isValidForm) {
         try {
           await createUser({ email: email.value, password: password.value });
-          signupSuccess.value = "Welcome to WallBooks !!";
+          signupSuccess.value = true;
           signupError.value = "";
           emit("onSignup");
         } catch (error) {

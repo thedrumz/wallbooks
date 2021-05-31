@@ -1,10 +1,10 @@
 <template>
+  <Notification v-if="loginSuccess" message="Login success !!" />
+  <Notification v-if="loginError" :message="loginError" type="error" />
   <UserForm
     class="login"
     title="Login"
     buttonText="Sign in"
-    :formValidMessage="loginSuccess"
-    :formErrorMessage="loginError"
     :onSubmit="onSubmit"
   >
     <template v-slot:content>
@@ -49,16 +49,17 @@ import { loginUser } from "@/services/userRepository";
 import UserForm from "@/components/ui/objects/UserForm.vue";
 import CustomInput from "@/components/ui/atoms/CustomInput.vue";
 import Button from "@/components/ui/atoms/Button.vue";
+import Notification from "@/components/ui/atoms/Notification.vue";
 
 export default defineComponent({
   name: "Login",
-  components: { UserForm, CustomInput, Button },
+  components: { UserForm, CustomInput, Button, Notification },
   emits: ["onLogin"],
   setup(props, { emit }) {
     const email = ref("");
     const password = ref("");
     const triggerValidation = ref(false);
-    const loginSuccess = ref("");
+    const loginSuccess = ref(false);
     const loginError = ref("");
 
     const emailValidator = (): string => {
@@ -86,7 +87,7 @@ export default defineComponent({
       if (isValidForm) {
         try {
           await loginUser({ email: email.value, password: password.value });
-          loginSuccess.value = "Login success !!";
+          loginSuccess.value = true;
           loginError.value = "";
           emit("onLogin");
         } catch (error) {

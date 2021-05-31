@@ -58,4 +58,7 @@ export default {
   &--success
     background-color: rgba($success-color, .7)
     color: $text-inverted-color
+  &--error
+    background-color: rgba($error-color, .7)
+    color: $text-inverted-color
 </style>

@@ -1,8 +1,5 @@
 <template>
   <section class="user-form">
-    <span class="user-form__success" v-if="formValidMessage">
-      {{ formValidMessage }}
-    </span>
     <h1 class="user-form__title">{{ title }}</h1>
     <form
       class="user-form__form"
@@ -11,9 +8,6 @@
       data-testid="form"
     >
       <slot name="content" />
-      <ValidationError v-if="formErrorMessage">
-        {{ formErrorMessage }}
-      </ValidationError>
       <Button class="user-form__btn" tag="button" theme="primary">
         {{ buttonText }}
       </Button>
@@ -25,25 +19,16 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Button from "@/components/ui/atoms/Button.vue";
-import ValidationError from "@/components/ui/atoms/ValidationError.vue";
 
 export default defineComponent({
   name: "UserForm",
-  components: { Button, ValidationError },
+  components: { Button },
   props: {
     title: {
       type: String,
       default: "",
     },
     buttonText: {
-      type: String,
-      default: "",
-    },
-    formValidMessage: {
-      type: String,
-      default: "",
-    },
-    formErrorMessage: {
       type: String,
       default: "",
     },
@@ -72,14 +57,4 @@ export default defineComponent({
     width: 60%
     display: flex
     flex-direction: column
-  &__success
-    position: absolute
-    top: -26px
-    background-color: white
-    border: 1px solid $primary-color
-    padding: 8px 25px
-    text-transform: uppercase
-    border-radius: 4px
-    font-weight: 700
-    color: $primary-color
 </style>
