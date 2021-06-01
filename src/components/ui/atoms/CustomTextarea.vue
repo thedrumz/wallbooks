@@ -1,17 +1,17 @@
 <template>
-  <div :class="`custom-input custom-input--${theme}`">
-    <label class="custom-input__label">
+  <div :class="`custom-textarea custom-textarea--${theme}`">
+    <label class="custom-textarea__label">
       {{ label }}
-      <input
-        class="custom-input__input"
-        :type="type"
+      <textarea
+        class="custom-textarea__field"
         :value="value"
         :name="name"
+        :rows="rows"
         :placeholder="placeholder"
         @input="$emit('update:value', $event.target.value)"
       />
     </label>
-    <ValidationError class="custom-input__error" v-if="triggerValidation">
+    <ValidationError class="custom-textarea__error" v-if="triggerValidation">
       {{ validator(value) }}
     </ValidationError>
   </div>
@@ -20,19 +20,19 @@
 import ValidationError from "@/components/ui/atoms/ValidationError.vue";
 
 export default {
-  name: "CustomInput",
+  name: "CustomTextarea",
   props: {
     label: {
       type: String,
       default: "",
     },
-    type: {
-      type: String,
-      default: "text",
-    },
     name: {
       type: String,
       default: "",
+    },
+    rows: {
+      type: Number,
+      default: 5,
     },
     placeholder: {
       type: String,
@@ -64,10 +64,9 @@ export default {
 
 <style lang="sass" scoped>
 @import "@/assets/styles/settings/_variables.sass";
-.custom-input
+.custom-textarea
   display: flex
   flex-direction: column
-  justify-content: flex-end
   position: relative
   padding-top: 1rem
   padding-bottom: 2rem
@@ -78,7 +77,7 @@ export default {
     font-size: $fs-input-label
     letter-spacing: 1.3px
     font-weight: 500
-  &__input
+  &__field
     padding: .4rem 0 .3rem
     border: none
     background: transparent
@@ -96,10 +95,10 @@ export default {
     position: absolute
     bottom: 10px
   &--default
-    .custom-input__label
+    .custom-textarea__label
       color: $text-primary-color
       border-bottom: 1px solid $border-color-primary
-    .custom-input__input
+    .custom-textarea__field
       color: $text-primary-color
       &:-webkit-autofill,
       &:-webkit-autofill:hover,
@@ -109,10 +108,10 @@ export default {
       &::placeholder
         color: rgba($text-primary-color, .5)
   &--primary
-    .custom-input__label
+    .custom-textarea__label
       color: $text-inverted-color
       border-bottom: 1px solid $border-color-inverted
-    .custom-input__input
+    .custom-textarea__field
       color: $text-inverted-color
       &:-webkit-autofill,
       &:-webkit-autofill:hover,

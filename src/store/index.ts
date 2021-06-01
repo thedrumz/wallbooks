@@ -18,10 +18,6 @@ export default createStore({
       state.books = books;
     },
     DELETE_BOOK(state, bookId: string) {
-      console.log(
-        "siii",
-        state.books?.filter((book) => book.id !== bookId)
-      );
       state.books = state.books?.filter((book) => book.id !== bookId) || null;
     },
   },

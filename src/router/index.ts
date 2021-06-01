@@ -4,6 +4,7 @@ import { getLoggedUser } from "@/services/userRepository";
 import Login from "../views/Login.vue";
 import Home from "../views/Home.vue";
 import Signup from "../views/Signup.vue";
+import AddBook from "../views/AddBook.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -36,6 +37,14 @@ const routes: Array<RouteRecordRaw> = [
     path: "/books/delete/:id",
     name: "DeleteBook",
     component: Home,
+    meta: {
+      authRequired: true,
+    },
+  },
+  {
+    path: "/books/add",
+    name: "AddBook",
+    component: AddBook,
     meta: {
       authRequired: true,
     },

@@ -6,3 +6,7 @@ export const dateToString = (date: Date) => {
   };
   return date.toLocaleDateString("en-US", options);
 };
+
+export const toISO = (date: Date) => {
+  return date.toISOString().substring(0, 10);
+};
