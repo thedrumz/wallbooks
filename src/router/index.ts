@@ -5,6 +5,7 @@ import Login from "../views/Login.vue";
 import Home from "../views/Home.vue";
 import Signup from "../views/Signup.vue";
 import AddBook from "../views/AddBook.vue";
+import EditBook from "../views/EditBook.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -45,6 +46,14 @@ const routes: Array<RouteRecordRaw> = [
     path: "/books/add",
     name: "AddBook",
     component: AddBook,
+    meta: {
+      authRequired: true,
+    },
+  },
+  {
+    path: "/books/edit/:id",
+    name: "EditBook",
+    component: EditBook,
     meta: {
       authRequired: true,
     },

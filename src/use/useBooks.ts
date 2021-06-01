@@ -1,6 +1,7 @@
-import { computed, ComputedRef, onMounted } from "vue";
+import { computed, ComputedRef, onMounted, Ref, ref } from "vue";
 import { Book } from "@/types/Book";
 import { useStore } from "vuex";
+import { getBook } from "@/services/booksRepository";
 
 export const useGetBooks = (): ComputedRef<Array<Book>> => {
   const store = useStore();
@@ -23,4 +24,12 @@ export const useCreateBook = () => {
   return async (book: Book) => {
     await store.dispatch("createBook", book);
   };
+};
+
+export const useGetBook = (id: string) => {
+  const book = ref<Book | null>(null);
+  onMounted(async () => {
+    book.value = await getBook(id);
+  });
+  return book;
 };

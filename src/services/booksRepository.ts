@@ -67,3 +67,31 @@ export const createBook = (book: Book): Promise<Book> => {
       });
   });
 };
+
+export const getBook = (id: string): Promise<Book> => {
+  return new Promise((resolve, reject) => {
+    const user = firebase.auth().currentUser;
+    if (!user?.uid) reject("Error getting books: No logged user found");
+
+    firebase
+      .firestore()
+      .collection("books")
+      .doc(id)
+      .get()
+      .then((query) => {
+        if (!query.exists) reject("Book not found");
+
+        const data = query.data();
+        const book: Book = {
+          ...data,
+          publishDate: data?.publishDate?.toDate(),
+        } as Book;
+
+        resolve(book);
+      })
+      .catch((error) => {
+        console.error("Error getting books: ", error);
+        reject(error);
+      });
+  });
+};
