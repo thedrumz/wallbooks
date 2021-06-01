@@ -33,3 +33,17 @@ export const getBooks = (): Promise<Array<Book>> => {
       });
   });
 };
+
+export const deleteBook = (bookId: string) => {
+  firebase
+    .firestore()
+    .collection("books")
+    .doc(bookId)
+    .delete()
+    .then(() => {
+      console.log("Document successfully deleted!");
+    })
+    .catch((error) => {
+      console.error("Error removing document: ", error);
+    });
+};

@@ -10,26 +10,18 @@
       <span class="publish__publish-date">{{ formattedDate }}</span>
     </main>
     <footer class="book__footer">
-      <Button class="signup__btn" tag="router-link" :to="`/books/edit/${id}`">
-        Edit book
-      </Button>
-      <Button
-        class="signup__btn"
-        tag="router-link"
-        theme="danger"
-        :to="`/books/delete/${id}`"
-      >
-        Delete
-      </Button>
+      <Button tag="router-link" :to="`/books/edit/${id}`"> Edit book </Button>
+      <Button theme="danger" @click="handleDelete"> Delete </Button>
     </footer>
   </article>
 </template>
 
 <script lang="ts">
 import Button from "@/components/ui/atoms/Button.vue";
+import { Book } from "@/types/Book";
+import { deleteBook } from "@/services/booksRepository";
 import { dateToString } from "@/utils/dates";
 import { truncate } from "@/utils/text";
-import { Book } from "@/types/Book";
 
 const DESCRIPTION_MAX_LENGTH = 200;
 const DESCRIPTION_ELLIPSIS = "...";
@@ -70,7 +62,9 @@ export default {
       DESCRIPTION_ELLIPSIS
     );
 
-    return { formattedDate, truncatedText };
+    const handleDelete = () => deleteBook(props.id);
+
+    return { formattedDate, truncatedText, handleDelete };
   },
 };
 </script>
