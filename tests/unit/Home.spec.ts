@@ -32,7 +32,7 @@ describe("Home component", () => {
     expect(getAllByTestId("book").length).toBe(books.length);
   });
 
-  it.only("should remove book when click on delete button", () => {
+  it("should remove book when click on delete button", () => {
     const books = generateBookList(1, 10);
     const bookQuantity = books.length;
     useGetBooksMock.mockImplementation(() => {
@@ -49,5 +49,10 @@ describe("Home component", () => {
     userEvent.click(deleteBtns[0]);
 
     expect(books.length).toBe(bookQuantity - 1);
+  });
+  it("should render add book button", () => {
+    const { getByRole } = render(Home);
+
+    expect(getByRole("button", { name: /add new book/i })).toBeInTheDocument();
   });
 });
