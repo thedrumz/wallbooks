@@ -9,7 +9,7 @@
 import { defineComponent } from "vue";
 import Page from "@/components/ui/objects/Page.vue";
 import BookList from "@/components/ui/objects/BookList.vue";
-import useGetBooks from "@/use/useGetBooks";
+import { useGetBooks } from "@/use/useBooks";
 
 export default defineComponent({
   name: "Home",

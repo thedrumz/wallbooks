@@ -19,7 +19,7 @@
 <script lang="ts">
 import Button from "@/components/ui/atoms/Button.vue";
 import { Book } from "@/types/Book";
-import { deleteBook } from "@/services/booksRepository";
+import { useDeleteBook } from "@/use/useBooks";
 import { dateToString } from "@/utils/dates";
 import { truncate } from "@/utils/text";
 
@@ -55,6 +55,7 @@ export default {
   },
   components: { Button },
   setup(props: Book) {
+    const deleteBook = useDeleteBook();
     const formattedDate = dateToString(props.publishDate);
     const truncatedText = truncate(
       props.description,

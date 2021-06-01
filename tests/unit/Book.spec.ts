@@ -8,6 +8,9 @@ import { truncate } from "@/utils/text";
 jest.mock("@/utils/text");
 const mockedTruncate = truncate as jest.Mock;
 
+// Mock useBooks
+jest.mock("@/use/useBooks");
+
 describe("Book component", () => {
   it("should render an image", () => {
     const book = generateBook();
