@@ -8,14 +8,21 @@
 </template>
 
 <script lang="ts">
+import { useRouter } from "vue-router";
+import { Book } from "@/types/Book";
+import { useCreateBook } from "@/use/useBooks";
 import Page from "@/components/ui/objects/Page.vue";
 import BookForm from "@/components/ui/objects/BookForm.vue";
 
 export default {
   components: { Page, BookForm },
   setup() {
-    const onValidSubmit = () => {
-      console.log("valid submit");
+    const createBook = useCreateBook();
+    const router = useRouter();
+
+    const onValidSubmit = async (book: Book) => {
+      await createBook(book);
+      router.push({ name: "Home" });
     };
 
     return { onValidSubmit };

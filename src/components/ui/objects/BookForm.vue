@@ -123,10 +123,11 @@ export default defineComponent({
 
     const onSubmit = () => {
       triggerValidation.value = true;
+      book.value.publishDate = new Date(publishDateRef.value);
 
       if (!validateFields(book)) return;
 
-      emit("onValidSubmit");
+      emit("onValidSubmit", book.value);
     };
 
     return {

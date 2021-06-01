@@ -1,13 +1,13 @@
-import { deleteBook, getBooks } from "@/services/booksRepository";
+import { deleteBook, getBooks, createBook } from "@/services/booksRepository";
 import { Book } from "@/types/Book";
 import { createStore } from "vuex";
 
 interface State {
-  books: Array<Book> | null;
+  books: Array<Book>;
 }
 
 const state: State = {
-  books: null,
+  books: [],
 };
 
 export default createStore({
@@ -20,6 +20,9 @@ export default createStore({
     DELETE_BOOK(state, bookId: string) {
       state.books = state.books?.filter((book) => book.id !== bookId) || null;
     },
+    CREATE_BOOK(state, book: Book) {
+      state.books = [...state.books, book];
+    },
   },
   actions: {
     async getBooks({ commit }) {
@@ -29,6 +32,10 @@ export default createStore({
     async deleteBook({ commit }, bookId: string) {
       await deleteBook(bookId);
       commit("DELETE_BOOK", bookId);
+    },
+    async createBook({ commit }, book: Book) {
+      const createdBook = await createBook(book);
+      commit("CREATE_BOOK", createdBook);
     },
   },
   modules: {},

@@ -1,5 +1,6 @@
 import { Book } from "@/types/Book";
 import firebase from "firebase";
+import { v4 as uuidv4 } from "uuid";
 
 export const getBooks = (): Promise<Array<Book>> => {
   return new Promise((resolve, reject) => {
@@ -46,4 +47,23 @@ export const deleteBook = (bookId: string) => {
     .catch((error) => {
       console.error("Error removing document: ", error);
     });
+};
+
+export const createBook = (book: Book): Promise<Book> => {
+  return new Promise((resolve, reject) => {
+    const user = firebase.auth().currentUser;
+    if (!user?.uid) reject("Error getting books: No logged user found");
+
+    firebase
+      .firestore()
+      .collection("books")
+      .add({ ...book, id: uuidv4(), userId: user?.uid })
+      .then(() => {
+        resolve(book);
+      })
+      .catch((error) => {
+        console.error("Error getting books: ", error);
+        reject(error);
+      });
+  });
 };

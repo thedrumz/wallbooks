@@ -17,3 +17,10 @@ export const useDeleteBook = () => {
     store.dispatch("deleteBook", bookId);
   };
 };
+
+export const useCreateBook = () => {
+  const store = useStore();
+  return async (book: Book) => {
+    await store.dispatch("createBook", book);
+  };
+};
