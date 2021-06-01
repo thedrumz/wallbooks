@@ -11,7 +11,9 @@
     </main>
     <footer class="book__footer">
       <Button tag="router-link" :to="`/books/edit/${id}`"> Edit book </Button>
-      <Button theme="danger" @click="handleDelete"> Delete </Button>
+      <Button tag="button" theme="danger" @click="handleDelete">
+        Delete
+      </Button>
     </footer>
   </article>
 </template>
