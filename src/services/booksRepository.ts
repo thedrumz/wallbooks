@@ -1,6 +1,5 @@
 import { Book } from "@/types/Book";
 import firebase from "firebase";
-import { v4 as uuidv4 } from "uuid";
 
 export const getBooks = (): Promise<Array<Book>> => {
   return new Promise((resolve, reject) => {
@@ -57,7 +56,7 @@ export const createBook = (book: Book): Promise<Book> => {
     firebase
       .firestore()
       .collection("books")
-      .add({ ...book, id: uuidv4(), userId: user?.uid })
+      .add({ ...book, userId: user?.uid })
       .then(() => {
         resolve(book);
       })
@@ -84,9 +83,30 @@ export const getBook = (id: string): Promise<Book> => {
         const data = query.data();
         const book: Book = {
           ...data,
+          id,
           publishDate: data?.publishDate?.toDate(),
         } as Book;
 
+        resolve(book);
+      })
+      .catch((error) => {
+        console.error("Error getting books: ", error);
+        reject(error);
+      });
+  });
+};
+
+export const updateBook = (book: Book): Promise<Book> => {
+  return new Promise((resolve, reject) => {
+    const user = firebase.auth().currentUser;
+    if (!user?.uid) reject("Error getting books: No logged user found");
+
+    firebase
+      .firestore()
+      .collection("books")
+      .doc(book.id)
+      .set({ ...book, userId: user?.uid })
+      .then(() => {
         resolve(book);
       })
       .catch((error) => {
