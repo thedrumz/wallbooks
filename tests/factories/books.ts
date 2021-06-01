@@ -23,3 +23,10 @@ const factory = Factory.define(() => ({
 export const generateBook = (params?: BookParams): Book => {
   return <Book>factory.build(params);
 };
+
+export function generateBookList(min = 0, max = 10): Array<Book> {
+  const length = randQuantity(min, max);
+  return <Array<Book>>factory.buildList(length);
+}
+
+const randQuantity = (min = 0, max = 10) => Math.random() * (max - min) + min;

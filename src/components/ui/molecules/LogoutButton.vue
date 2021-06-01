@@ -3,16 +3,16 @@
 </template>
 
 <script lang="ts">
-import { onMounted, Ref, ref } from "vue";
 import { useRouter } from "vue-router";
-import { getLoggedUser, logout } from "@/services/userRepository";
+import { logout } from "@/services/userRepository";
+import useLoggedUser from "@/use/useLoggedUser";
 import Button from "@/components/ui/atoms/Button.vue";
 
 export default {
   components: { Button },
   setup() {
     const router = useRouter();
-    const isLoggedIn = checkIsLoggedIn();
+    const isLoggedIn = useLoggedUser();
 
     const handleLogout = () => {
       logout();
@@ -21,15 +21,6 @@ export default {
 
     return { handleLogout, isLoggedIn };
   },
-};
-
-const checkIsLoggedIn = (): Ref<boolean> => {
-  const isLoggedIn = ref(false);
-  onMounted(async (): Promise<void> => {
-    const user = await getLoggedUser();
-    isLoggedIn.value = !!user;
-  });
-  return isLoggedIn;
 };
 </script>
 

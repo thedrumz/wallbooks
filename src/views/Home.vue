@@ -9,10 +9,15 @@
 import { defineComponent } from "vue";
 import Page from "@/components/ui/objects/Page.vue";
 import BookList from "@/components/ui/objects/BookList.vue";
+import useGetBooks from "@/use/useGetBooks";
 
 export default defineComponent({
   name: "Home",
   components: { Page, BookList },
+  setup() {
+    const books = useGetBooks();
+    return { books };
+  },
 });
 </script>
 

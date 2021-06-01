@@ -1,5 +1,5 @@
 <template>
-  <article class="book">
+  <article class="book" data-testid="book">
     <header class="book__header">
       <img class="book__image" :src="imageUrl" alt="book image" />
     </header>
