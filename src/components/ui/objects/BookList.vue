@@ -1,5 +1,7 @@
 <template>
-  <p v-if="!books || !books.length">There are no books, please create some</p>
+  <p class="no-books" v-if="!books || !books.length">
+    There are no books, please create some
+  </p>
   <div class="book-list">
     <div v-for="book of books" :key="book.id">
       <Book
@@ -38,4 +40,11 @@ export default {
   margin: 1rem 0
   @media (max-width: $tablet - 1)
     grid-template-columns: 1fr
+.no-books
+  display: flex
+  justify-content: center
+  font-size: $fs-text-l
+  font-weight: 500
+  text-transform: uppercase
+  text-decoration: underline
 </style>
