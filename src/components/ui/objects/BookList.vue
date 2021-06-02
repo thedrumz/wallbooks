@@ -15,15 +15,16 @@
 </template>
 
 <script lang="ts">
+import { useGetBooks } from "@/use/useBooks";
 import Book from "@/components/ui/molecules/Book.vue";
 
 export default {
-  props: {
-    books: {
-      type: Array,
-    },
-  },
   components: { Book },
+  setup() {
+    const books = useGetBooks();
+
+    return { books };
+  },
 };
 </script>
 
@@ -34,4 +35,5 @@ export default {
   grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr))
   grid-auto-rows: 1fr
   gap: $spacing-m
+  margin: 1rem 0
 </style>

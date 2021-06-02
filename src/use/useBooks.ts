@@ -8,7 +8,7 @@ export const useGetBooks = (): ComputedRef<Array<Book>> => {
   onMounted(() => {
     store.dispatch("getBooks");
   });
-  const books = computed(() => store.state.books);
+  const books = computed(() => store.getters.getBooks());
   return books;
 };
 

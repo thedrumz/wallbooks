@@ -2,17 +2,37 @@ import { deleteBook, getBooks, createBook } from "@/services/booksRepository";
 import { Book } from "@/types/Book";
 import { createStore } from "vuex";
 
+interface Paginate {
+  page: number;
+  perPage: number;
+}
+
 interface State {
   books: Array<Book>;
+  paginate: Paginate;
 }
 
 const state: State = {
   books: [],
+  paginate: { page: 1, perPage: 2 },
 };
 
 export default createStore({
   state,
-  getters: {},
+  getters: {
+    getBooksCount: (state) => () => state.books.length,
+    getBooks: (state) => () => {
+      const start = (state.paginate.page - 1) * state.paginate.perPage;
+      const end = state.paginate.page * state.paginate.perPage;
+      return state.books.slice(start, end);
+    },
+    getPagesLength: (state) => () => {
+      const pages = state.books.length / state.paginate.perPage;
+      const intPart = Math.trunc(pages);
+      const floatPart = pages % 1;
+      return floatPart ? intPart + 1 : intPart;
+    },
+  },
   mutations: {
     SET_BOOKS(state, books: Array<Book>) {
       state.books = books;
@@ -22,6 +42,9 @@ export default createStore({
     },
     CREATE_BOOK(state, book: Book) {
       state.books = [...state.books, book];
+    },
+    CHANGE_PAGE(state, page) {
+      state.paginate = { ...state.paginate, page };
     },
   },
   actions: {
