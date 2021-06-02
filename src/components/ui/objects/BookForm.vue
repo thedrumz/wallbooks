@@ -163,6 +163,8 @@ const validateFields = (book: Ref<Book>) => {
     display: grid
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr))
     gap: $spacing-m
+    @media (max-width: $tablet - 1)
+      grid-template-columns: 1fr
   &__title
     color: $text-inverted-color
   &__footer

@@ -36,4 +36,6 @@ export default {
   grid-auto-rows: 1fr
   gap: $spacing-m
   margin: 1rem 0
+  @media (max-width: $tablet - 1)
+    grid-template-columns: 1fr
 </style>

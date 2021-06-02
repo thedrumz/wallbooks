@@ -45,7 +45,8 @@ export default defineComponent({
 @import "@/assets/styles/settings/_variables.sass";
 .user-form
   position: relative
-  width: 32rem
+  max-width: 32rem
+  width: 100%
   @include center()
   margin: 0 auto
   padding-bottom: 2.5rem

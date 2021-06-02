@@ -113,7 +113,6 @@ export default defineComponent({
 </script>
 
 <style lang="sass" scoped>
-@import "@/assets/styles/tools/_mixins.sass";
 @import "@/assets/styles/settings/_variables.sass";
 .login
   &__btn
@@ -122,8 +121,10 @@ export default defineComponent({
     width: 60%
     display: flex
     justify-content: space-between
+    flex-wrap: wrap
     align-items: center
     margin-top: .5rem
     &__copy
+      margin-right: .5rem
       color: $text-inverted-color
 </style>

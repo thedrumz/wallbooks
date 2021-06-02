@@ -1,11 +1,13 @@
 <template>
   <header class="header">
-    <img
-      class="header__brand"
-      src="@/assets/logo-wallbooks.svg"
-      alt="logo wallbooks"
-    />
-    <LogoutButton />
+    <div class="header__content">
+      <img
+        class="header__brand"
+        src="@/assets/logo-wallbooks.svg"
+        alt="logo wallbooks"
+      />
+      <LogoutButton />
+    </div>
   </header>
 </template>
 
@@ -19,13 +21,16 @@ export default {
 
 <style lang="sass" scoped>
 @import "@/assets/styles/settings/_variables.sass";
+@import "@/assets/styles/tools/_mixins.sass";
 .header
   height: 60px
-  display: flex
-  justify-content: space-between
-  align-items: center
-  padding: $spacing-s $spacing-s * 2
   background-color: $background-light-color
+  &__content
+    @include responsive-layout()
+    height: 100%
+    display: flex
+    justify-content: space-between
+    align-items: center
   &__brand
     width: 150px
 </style>

@@ -1,10 +1,10 @@
 <template>
   <div class="page">
-    <Header />
+    <Header class="page__header" />
     <main :class="`page__content page__content--${position}`">
       <slot />
     </main>
-    <Footer />
+    <Footer class="page__footer" />
   </div>
 </template>
 
@@ -28,16 +28,19 @@ export default {
 
 <style lang="sass" scoped>
 @import "@/assets/styles/settings/_variables.sass";
+@import "@/assets/styles/tools/_mixins.sass";
 .page
   display: flex
   flex-direction: column
   min-height: 100vh
   background-color: $background-extra-light-color
   &__content
+    @include responsive-layout()
     flex: 1 1 auto
     display: flex
     flex-direction: column
-    padding: $spacing-s $spacing-s * 2
+    padding-top: $spacing-s
+    padding-bottom: $spacing-s
     &--top
       justify-content: flex-start
     &--center

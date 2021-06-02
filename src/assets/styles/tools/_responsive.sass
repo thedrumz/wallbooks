@@ -1,0 +1,10 @@
+@import '../settings/_layout'
+@mixin responsive-layout ()
+  width: $desktop
+  margin: 0 auto
+  padding-left: $spacing-m
+  padding-right: $spacing-m
+  @media (max-width: $desktop - 1)
+    width: $tablet
+  @media (max-width: $tablet - 1)
+    width: 100%
