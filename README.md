@@ -1,29 +1,26 @@
-# wallbox-books
+# WallBooks
 
-## Project setup
-```
-npm install
-```
+## How to start
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+You need to create `.env` file and setup the required variables
 
-### Compiles and minifies for production
-```
-npm run build
-```
+    VUE_APP_FIREBASE_API_KEY
+    VUE_APP_FIREBASE_AUTH_DOMAIN
+    VUE_APP_FIREBASE_PROJECT_ID
+    VUE_APP_FIREBASE_STORAGE_BUCKET
+    VUE_APP_FIREBASE_MESAGE_SENDER_ID
+    VUE_APP_FIREBASE_APP_ID
 
-### Run your unit tests
-```
-npm run test:unit
-```
+Now you can start the project
 
-### Lints and fixes files
-```
-npm run lint
-```
+- Install dependencies with `yarn`
+- Run application `yarn serve`
+- Run test `yarn test`
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Project features
+
+- Users
+  - Signup, login and logout
+- Books
+  - Create, read, update, delete
+  - Book list pagination
