@@ -14,7 +14,7 @@ interface State {
 
 const state: State = {
   books: [],
-  paginate: { page: 1, perPage: 2 },
+  paginate: { page: 1, perPage: 5 },
 };
 
 export default createStore({
